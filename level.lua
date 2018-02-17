@@ -9,9 +9,46 @@ Level.tiles = {
     ["spike"] = Tile(true, love.graphics.newQuad(2*n, n, n, n, 64, 64))
 }
 
-function Level:new(file)
+function Level:new()
     self.tileWidth = n
     self.tileHeight = n
+
+    -- Sprite batch.
+    self.image = Media:getImage("programmer-art.png")
+    self.spriteBatch = love.graphics.newSpriteBatch(self.image)
+end
+
+function Level:getTile(x, y)
+    -- We use 0 based locations, correct the index
+    local x, y = x + 1, y + 1
+
+    local mapx = self.map[x]
+    if mapx ~= nil then
+        return mapx[y]
+    end
+end
+
+function Level:isPassable(x, y)
+    local tile = self:getTile(x, y)
+    return tile ~= nil and not tile.solid
+end
+
+function Level:getPath(startx, starty, endx, endy)
+    -- We could possibly cache the pathFinder if we need to get more performance.
+    local pathFinder = ROT.Path.AStar(endx, endy, function(x, y)
+        return self:isPassable(x,y)
+    end, { topology = 4 })
+
+    local path = {}
+
+    pathFinder:compute(startx, starty, function(x, y)
+        table.insert(path, {x=x, y=y})
+    end)
+
+    return path
+end
+
+function Level:loadFromFile(file)
     local chars_to_tiles = {
         ["-"] = Level.tiles["empty"],
         ["^"] = Level.tiles["spike"]
@@ -45,40 +82,6 @@ function Level:new(file)
             x = x + 1
         end
     end
-
-    -- Sprite batch.
-    self.image = Media:getImage("programmer-art.png")
-    self.spriteBatch = love.graphics.newSpriteBatch(self.image, self.mapWidth * self.mapHeight)
-end
-
-function Level:getTile(x, y)
-    -- We use 0 based locations, correct the index
-    local x, y = x + 1, y + 1
-
-    local mapx = self.map[x]
-    if mapx ~= nil then
-        return mapx[y]
-    end
-end
-
-function Level:isPassable(x, y)
-    local tile = self:getTile(x, y)
-    return tile ~= nil and not tile.solid
-end
-
-function Level:getPath(startx, starty, endx, endy)
-    -- We could possibly cache the pathFinder if we need to get more performance.
-    local pathFinder = ROT.Path.AStar(endx, endy, function(x, y)
-        return self:isPassable(x,y)
-    end, { topology = 4 })
-
-    local path = {}
-
-    pathFinder:compute(startx, starty, function(x, y)
-        table.insert(path, {x=x, y=y})
-    end)
-
-    return path
 end
 
 function Level:draw()
