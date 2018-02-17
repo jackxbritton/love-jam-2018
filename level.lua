@@ -8,7 +8,7 @@ function Level:new(w, h)
     self.h = h
 
     -- Sprite batch.
-    self.image = love.graphics.newImage("assets/programmer-art.png")
+    self.image = Media:getImage("programmer-art.png")
     self.spriteBatch = love.graphics.newSpriteBatch(self.image, w*h)
 
     self.map = {}
