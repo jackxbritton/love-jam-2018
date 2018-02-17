@@ -16,8 +16,10 @@ function LevelEntity:moveTo(x, y)
 end
 
 function LevelEntity:draw()
-    local x, y = self.x * self.level.w, self.y * self.level.h
-    local w, h = self.width * self.level.w, self.height * self.level.h
+    local ww,wh = love.graphics.getDimensions()
+
+    local x, y = self.x * ww/self.level.w, self.y * wh/self.level.h
+    local w, h = self.width * ww/self.level.w, self.height * wh/self.level.h
 
     -- Hot pink is the best for temp graphics
     love.graphics.setColor(255,105,180)
