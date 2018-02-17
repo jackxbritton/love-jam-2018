@@ -9,21 +9,45 @@ Level.tiles = {
     ["spike"] = Tile(love.graphics.newQuad(2*n, n, n, n, 64, 64))
 }
 
-function Level:new(w, h)
-    self.w = w
-    self.h = h
+function Level:new(file)
+
+    local chars_to_tiles = {
+        ["-"] = Level.tiles["empty"],
+        ["^"] = Level.tiles["spike"]
+    }
+
+    local f = io.open(file, "rb")
+    local s = f:read("*all")
+    s = s:gsub("[ \t\r]", "") -- Eliminate whitespace (and carriage returns).
+
+    self.w = s:find("\n") - 1 -- Use the first \n to find the map width.
+
+    self.map = {}
+    for x = 1,self.w do
+        self.map[x] = {}
+    end
+
+    local x = 1
+    self.h = 0
+
+    for i = 1,s:len() do
+        local c = s:sub(i,i)
+        if c == "\n" then
+            -- It's a new row.
+            x = 1
+            self.h = self.h + 1
+        else
+            if (chars_to_tiles[c] == nil) then
+                print("error loading level")
+            end
+            self.map[x][self.h+1] = chars_to_tiles[c]
+            x = x + 1
+        end
+    end
 
     -- Sprite batch.
     self.image = Media:getImage("programmer-art.png")
-    self.spriteBatch = love.graphics.newSpriteBatch(self.image, w*h)
-
-    self.map = {}
-    for x = 0, w-1 do
-        self.map[x] = {}
-        for y = 0, h-1 do
-            self.map[x][y] = Level.tiles["empty"]
-        end
-    end
+    self.spriteBatch = love.graphics.newSpriteBatch(self.image, self.w*self.h)
 
 end
 
@@ -35,7 +59,7 @@ function Level:draw()
     self.spriteBatch:clear()
     for x = 0, self.w-1 do
         for y = 0, self.h-1 do
-            self.spriteBatch:add(self.map[x][y].quad, x*dx, y*dy, (x+1)*dx, (y+1)*dy)
+            self.spriteBatch:add(self.map[x+1][y+1].quad, x*dx, y*dy, 0, dx, dy)
         end
     end
 
