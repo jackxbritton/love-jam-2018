@@ -1,4 +1,4 @@
-local TurnEntity = Entity:extend()
+local TurnEntity = require("levelentity"):extend()
 
 function TurnEntity:new(...)
     TurnEntity.super.new(self, ...)
