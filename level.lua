@@ -54,7 +54,7 @@ end
 function Level:getTile(x, y)
     -- We use 0 based locations, correct the index
     local x, y = x + 1, y + 1
-    
+
     local mapx = self.map[x]
     if mapx ~= nil then
         return mapx[y]
@@ -68,7 +68,7 @@ function Level:draw()
     for x = 0, self.mapWidth-1 do
         for y = 0, self.mapHeight-1 do
             local sx, sy = x * self.tileWidth, y * self.tileHeight
-            self.spriteBatch:add(self.map[x+1][y+1].quad, sx, sy, 0, self.tileWidth, self.tileHeight)
+            self.spriteBatch:add(self.map[x+1][y+1].quad, sx, sy, 0, 1, 1)
         end
     end
 

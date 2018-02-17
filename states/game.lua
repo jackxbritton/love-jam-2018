@@ -14,7 +14,7 @@ function GameState:new()
     self.level = Level("assets/maps/level.txt")
     self.entities = Group()
     self.player = Player(self.level)
-    self.camera = Camera(0,0, 4)
+    self.camera = Camera(0,0, 2)
 
     self.entities:add(self.player)
     self.entities:add(Enemy(self.level))
