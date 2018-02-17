@@ -4,7 +4,7 @@ local Actions = require("actions")
 function Enemy:new(level)
     Enemy.super.new(self, level)
 
-    self.x, self.y = 3, 0
+    self.x, self.y = 3, 2
 end
 
 function Enemy:doTurn()

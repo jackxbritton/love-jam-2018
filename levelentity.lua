@@ -11,8 +11,15 @@ function LevelEntity:moveDelta(dx, dy)
 end
 
 function LevelEntity:moveTo(x, y)
-    self.x = x
-    self.y = y
+    if self:canMoveTo(x, y) then
+        self.x = x
+        self.y = y
+    end
+end
+
+function LevelEntity:canMoveTo(x, y)
+    local tile = self.level:getTile(x, y)
+    return tile ~= nil and not tile.solid
 end
 
 function LevelEntity:draw()

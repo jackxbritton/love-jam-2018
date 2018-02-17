@@ -4,7 +4,7 @@ local Player = require("turnentity"):extend()
 function Player:new(level)
     Player.super.new(self, level)
 
-    self.x, self.y = 0, 0
+    self.x, self.y = 3, 8
 end
 
 function Player:doAction(action)

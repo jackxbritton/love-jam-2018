@@ -5,8 +5,8 @@ local Level = Object:extend()
 
 local n = 16
 Level.tiles = {
-    ["empty"] = Tile(love.graphics.newQuad(0, 0, n, n, 64, 64)),
-    ["spike"] = Tile(love.graphics.newQuad(2*n, n, n, n, 64, 64))
+    ["empty"] = Tile(false, love.graphics.newQuad(0, 0, n, n, 64, 64)),
+    ["spike"] = Tile(true, love.graphics.newQuad(2*n, n, n, n, 64, 64))
 }
 
 function Level:new(file)
@@ -49,7 +49,16 @@ function Level:new(file)
     -- Sprite batch.
     self.image = Media:getImage("programmer-art.png")
     self.spriteBatch = love.graphics.newSpriteBatch(self.image, self.mapWidth * self.mapHeight)
+end
 
+function Level:getTile(x, y)
+    -- We use 0 based locations, correct the index
+    local x, y = x + 1, y + 1
+    
+    local mapx = self.map[x]
+    if mapx ~= nil then
+        return mapx[y]
+    end
 end
 
 function Level:draw()
