@@ -1,10 +1,11 @@
 local Player = require("turnentity"):extend()
 
 
-function Player:new()
-    Player.super.new(self, 0,0, 20,20)
+function Player:new(mapW, mapH)
+    Player.super.new(self, 0,0, 1,1)
 
-    self.mapX, self.mapY = 0,0
+    self.x,self.y = 0,0
+    self.mapW,self.mapH = mapW,mapH
 end
 
 function Player:doAction(action)
@@ -21,23 +22,22 @@ function Player:doAction(action)
 end
 
 function Player:moveDelta(dx, dy)
-    local nx = self.mapX + dx
-    local ny = self.mapY + dy
-
-    self:moveTo(nx, ny)
+    self:moveTo(self.x + dx, self.y + dy)
 end
 
-function Player:moveTo(nx, ny)
-    self.mapX = nx
-    self.mapY = ny
-
-    self.x = nx * 20
-    self.y = ny * 20
+function Player:moveTo(x, y)
+    self.x = x
+    self.y = y
 end
 
 function Player:draw()
+
+    local w, h = love.graphics.getDimensions()
+    local dx, dy = w / self.mapW, h / self.mapH
+
     love.graphics.setColor(0, 0, 0)
-    love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
+    love.graphics.rectangle("fill", self.x*dx, self.y*dy, self.width*dx, self.height*dy)
+
 end
 
 

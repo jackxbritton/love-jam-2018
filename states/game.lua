@@ -7,9 +7,10 @@ local Actions = require("actions")
 
 
 function GameState:new()
-    self.level = Level(4, 4)
+    local w,h = 16,9
+    self.level = Level(w, h)
     self.entities = Group()
-    self.player = Player()
+    self.player = Player(w, h)
 
     self.entities:add(self.player)
 end
