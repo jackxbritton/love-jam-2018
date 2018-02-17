@@ -1,7 +1,9 @@
-local Tile = Rect:extend()
+local Object = require("lib.classic")
 
-function Tile:new()
-    -- TODO What is a tile tho
+local Tile = Object:extend()
+
+function Tile:new(quad)
+    self.quad = quad;
 end
 
 return Tile
