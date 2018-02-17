@@ -1,13 +1,13 @@
 --
 -- flux
 --
--- Copyright (c) 2016 rxi
+-- Copyright (c) 2014, rxi
 --
 -- This library is free software; you can redistribute it and/or modify it
 -- under the terms of the MIT license. See LICENSE for details.
 --
 
-local flux = { _version = "0.1.5" }
+local flux = { _version = "0.1.4" }
 flux.__index = flux
 
 flux.tweens = {}
@@ -205,7 +205,7 @@ function flux:remove(x)
     self[x] = self[#self]
     return table.remove(self)
   end
-  for i, v in ipairs(self) do
+  for i, v in pairs(self) do
     if v == x then
       return flux.remove(self, i)
     end

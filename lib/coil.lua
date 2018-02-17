@@ -14,19 +14,19 @@ coil.tasks = {}
 
 local unpack = unpack or table.unpack
 
-local _assert = function(cond, msg, lvl) 
+local _assert = function(cond, msg, lvl)
   if cond then return cond, msg, lvl end
   error(msg, lvl + 1)
 end
 
-local callback_mt = { 
+local callback_mt = {
   __call = function(t, ...)
     t.args = {...}
     t.ready = true
   end}
 
 
-local task = {} 
+local task = {}
 task.__index = task
 
 
@@ -59,7 +59,7 @@ end
 function coil:update(dt)
   if #self == 0 then return end
   coil.deltatime = dt
-  for i = #self, 1, -1 do 
+  for i = #self, 1, -1 do
     local task = self[i]
     if task.wait then
       -- Handle wait

@@ -1,19 +1,20 @@
 --
 -- lume
 --
--- Copyright (c) 2017 rxi
+-- Copyright (c) 2015 rxi
 --
 -- This library is free software; you can redistribute it and/or modify it
 -- under the terms of the MIT license. See LICENSE for details.
 --
 
-local lume = { _version = "2.3.0" }
+local lume = { _version = "2.2.3" }
 
 local pairs, ipairs = pairs, ipairs
 local type, assert, unpack = type, assert, unpack or table.unpack
 local tostring, tonumber = tostring, tonumber
 local math_floor = math.floor
 local math_ceil = math.ceil
+local math_random = love.math.random
 local math_atan2 = math.atan2 or math.atan
 local math_sqrt = math.sqrt
 local math_abs = math.abs
@@ -110,20 +111,15 @@ function lume.angle(x1, y1, x2, y2)
 end
 
 
-function lume.vector(angle, magnitude)
-  return math.cos(angle) * magnitude, math.sin(angle) * magnitude
-end
-
-
 function lume.random(a, b)
   if not a then a, b = 0, 1 end
   if not b then b = 0 end
-  return a + math.random() * (b - a)
+  return a + math_random() * (b - a)
 end
 
 
 function lume.randomchoice(t)
-  return t[math.random(#t)]
+  return t[math_random(#t)]
 end
 
 
@@ -198,7 +194,7 @@ end
 function lume.shuffle(t)
   local rtn = {}
   for i = 1, #t do
-    local r = math.random(i)
+    local r = math_random(i)
     if r ~= i then
       rtn[i] = rtn[r]
     end
@@ -662,7 +658,7 @@ end
 
 function lume.uuid()
   local fn = function(x)
-    local r = math.random(16) - 1
+    local r = math_random(16) - 1
     r = (x == "x") and (r + 1) or (r % 4) + 9
     return ("0123456789abcdef"):sub(r, r)
   end

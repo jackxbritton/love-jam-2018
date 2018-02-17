@@ -1,3 +1,14 @@
+-- Set up globals
+Object = require("lib.classic")
+lume = require("lib.lume")
+coil = require("lib.coil")
+flux = require("lib.flux")
+Media = require("lib.mediamanager")
+Rect = require("lib.rectangle")
+
+-- Watch out for globals
+require("lib.globalwatch")
+
 function love.load()
 end
 
