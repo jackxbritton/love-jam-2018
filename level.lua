@@ -10,7 +10,8 @@ Level.tiles = {
 }
 
 function Level:new(file)
-
+    self.tileWidth = n
+    self.tileHeight = n
     local chars_to_tiles = {
         ["-"] = Level.tiles["empty"],
         ["^"] = Level.tiles["spike"]
@@ -20,46 +21,45 @@ function Level:new(file)
     local s = f:read("*all")
     s = s:gsub("[ \t\r]", "") -- Eliminate whitespace (and carriage returns).
 
-    self.w = s:find("\n") - 1 -- Use the first \n to find the map width.
+    self.mapWidth = s:find("\n") - 1 -- Use the first \n to find the map width.
 
     self.map = {}
-    for x = 1,self.w do
+    for x = 1,self.mapWidth do
         self.map[x] = {}
     end
 
     local x = 1
-    self.h = 0
+    self.mapHeight = 0
 
     for i = 1,s:len() do
         local c = s:sub(i,i)
         if c == "\n" then
             -- It's a new row.
             x = 1
-            self.h = self.h + 1
+            self.mapHeight = self.mapHeight + 1
         else
             if (chars_to_tiles[c] == nil) then
                 print("error loading level")
             end
-            self.map[x][self.h+1] = chars_to_tiles[c]
+            self.map[x][self.mapHeight+1] = chars_to_tiles[c]
             x = x + 1
         end
     end
 
     -- Sprite batch.
     self.image = Media:getImage("programmer-art.png")
-    self.spriteBatch = love.graphics.newSpriteBatch(self.image, self.w*self.h)
+    self.spriteBatch = love.graphics.newSpriteBatch(self.image, self.mapWidth * self.mapHeight)
 
 end
 
 function Level:draw()
     love.graphics.setColor(255,255,255)
-    local w, h = love.graphics.getDimensions()
-    local dx, dy = w / self.w, h / self.h
 
     self.spriteBatch:clear()
-    for x = 0, self.w-1 do
-        for y = 0, self.h-1 do
-            self.spriteBatch:add(self.map[x+1][y+1].quad, x*dx, y*dy, 0, dx, dy)
+    for x = 0, self.mapWidth-1 do
+        for y = 0, self.mapHeight-1 do
+            local sx, sy = x * self.tileWidth, y * self.tileHeight
+            self.spriteBatch:add(self.map[x+1][y+1].quad, sx, sy, 0, self.tileWidth, self.tileHeight)
         end
     end
 

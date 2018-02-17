@@ -16,13 +16,11 @@ function LevelEntity:moveTo(x, y)
 end
 
 function LevelEntity:draw()
-    local ww,wh = love.graphics.getDimensions()
-
-    local x, y = self.x * ww/self.level.w, self.y * wh/self.level.h
-    local w, h = self.width * ww/self.level.w, self.height * wh/self.level.h
+    local x, y = self.x * self.level.tileWidth, self.y * self.level.tileHeight
+    local w, h = self.width * self.level.tileWidth, self.height * self.level.tileHeight
 
     -- Hot pink is the best for temp graphics
-    love.graphics.setColor(255,105,180)
+    love.graphics.setColor(200,200,200)
     love.graphics.rectangle("fill", x, y, w, h)
 end
 
