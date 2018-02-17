@@ -9,7 +9,7 @@ local Actions = require("actions")
 
 
 function GameState:new()
-    self.level = Level("level.txt")
+    self.level = Level("assets/maps/level.txt")
     self.entities = Group()
     self.player = Player(self.level)
 
