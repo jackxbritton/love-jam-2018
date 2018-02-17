@@ -4,7 +4,6 @@ local Tile = require("tile")
 local Level = Object:extend()
 
 function Level:new(w, h)
-
     self.w = w
     self.h = h
 
@@ -24,7 +23,7 @@ function Level:new(w, h)
 end
 
 function Level:draw()
-
+    love.graphics.setColor(255,255,255)
     local w, h = love.graphics.getDimensions()
     local dx, dy = w / self.w, h / self.h
 
