@@ -1,5 +1,7 @@
 local GameState = Object:extend()
 
+local Camera = require("lib.hump.camera")
+
 local Player  = require("entities.player")
 local Enemy   = require("entities.enemy")
 local TurnEntity   = require("turnentity")
@@ -12,6 +14,7 @@ function GameState:new()
     self.level = Level("assets/maps/level.txt")
     self.entities = Group()
     self.player = Player(self.level)
+    self.camera = Camera(0,0, 4)
 
     self.entities:add(self.player)
     self.entities:add(Enemy(self.level))
@@ -32,12 +35,17 @@ function GameState:keypressed(key, scancode, isrepeat)
 end
 
 function GameState:update(dt)
+    local playerRect = self.player:getScreenRect()
+    self.camera:lookAt(playerRect:middle())
+
     self.entities:update(dt)
 end
 
 function GameState:draw()
+    self.camera:attach()
     self.level:draw()
     self.entities:draw()
+    self.camera:detach()
 end
 
 function GameState:doTurn(action)
