@@ -15,20 +15,16 @@ function GameState:new()
 end
 
 function GameState:keypressed(key, scancode, isrepeat)
-    local action = nil
 
-    if key == "up" then
-        action = Actions.Move(0, -1)
-    elseif key == "down" then
-        action = Actions.Move(0, 1)
-    elseif key == "left" then
-        action = Actions.Move(-1, 0)
-    elseif key == "right" then
-        action = Actions.Move(1, 0)
-    end
+    local actions = {
+        ["up"]    = Actions.Move( 0,-1),
+        ["down"]  = Actions.Move( 0, 1),
+        ["left"]  = Actions.Move(-1, 0),
+        ["right"] = Actions.Move( 1, 0)
+    }
 
-    if action ~= nil then
-        self:doTurn(action)
+    if actions[key] ~= nil then
+        self:doTurn(actions[key])
     end
 end
 
