@@ -1,10 +1,23 @@
-local Player = Entity:extend()
+local Player = require("turnentity"):extend()
 
 
 function Player:new()
     Player.super.new(self, 0,0, 20,20)
 
     self.mapX, self.mapY = 0,0
+end
+
+function Player:doAction(action)
+    local elapsedTime = Player.super.doAction(self, action)
+
+    -- Reset action points as we can assume our action consumes all avaliable
+    self.actionPoints = 0
+
+    if (action.action == "Move") then
+        self:moveDelta(unpack(action.direction))
+    end
+
+    return elapsedTime
 end
 
 function Player:moveDelta(dx, dy)

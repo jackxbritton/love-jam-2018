@@ -23,6 +23,17 @@ function Group:remove(e)
     table.remove(self.members, lume.find(self.members, e))
 end
 
+function Group:filter(predicate)
+    local ents = {}
+    for _, ent in ipairs(self.members) do
+        if predicate(ent) then
+            table.insert(ents, ent)
+        end
+    end
+
+    return ents
+end
+
 function Group:update(dt)
     -- Update
     for i = #self.members, 1, -1 do
