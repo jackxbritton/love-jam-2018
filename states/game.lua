@@ -16,8 +16,13 @@ function GameState:new()
     self.player = Player(self.level)
     self.camera = Camera(0,0, 2)
 
-    self.entities:add(self.player)
-    self.entities:add(Enemy(self.level))
+    self:addEntity(self.player)
+    self:addEntity(Enemy(self.level))
+end
+
+function GameState:addEntity(ent)
+    ent.gamestate = self
+    self.entities:add(ent)
 end
 
 function GameState:keypressed(key, scancode, isrepeat)
@@ -26,7 +31,8 @@ function GameState:keypressed(key, scancode, isrepeat)
         ["up"]    = Actions.Move( 0,-1),
         ["down"]  = Actions.Move( 0, 1),
         ["left"]  = Actions.Move(-1, 0),
-        ["right"] = Actions.Move( 1, 0)
+        ["right"] = Actions.Move( 1, 0),
+        ["space"] = Actions.Move( 0, 0)
     }
 
     if actions[key] ~= nil then

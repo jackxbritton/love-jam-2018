@@ -1,4 +1,4 @@
-local Object = require("lib.classic")
+local ROT = require("lib.rotLove.rot")
 local Tile = require("tile")
 
 local Level = Object:extend()
@@ -59,6 +59,26 @@ function Level:getTile(x, y)
     if mapx ~= nil then
         return mapx[y]
     end
+end
+
+function Level:isPassable(x, y)
+    local tile = self:getTile(x, y)
+    return tile ~= nil and not tile.solid
+end
+
+function Level:getPath(startx, starty, endx, endy)
+    -- We could possibly cache the pathFinder if we need to get more performance.
+    local pathFinder = ROT.Path.AStar(endx, endy, function(x, y)
+        return self:isPassable(x,y)
+    end, { topology = 4 })
+
+    local path = {}
+
+    pathFinder:compute(startx, starty, function(x, y)
+        table.insert(path, {x=x, y=y})
+    end)
+
+    return path
 end
 
 function Level:draw()
