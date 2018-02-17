@@ -1,6 +1,8 @@
 local GameState = Object:extend()
 
 local Player  = require("entities.player")
+local Enemy   = require("entities.enemy")
+local TurnEntity   = require("turnentity")
 local Level   = require("level")
 local Group   = require("group")
 local Actions = require("actions")
@@ -12,6 +14,7 @@ function GameState:new()
     self.player = Player(self.level)
 
     self.entities:add(self.player)
+    self.entities:add(Enemy(self.level))
 end
 
 function GameState:keypressed(key, scancode, isrepeat)
@@ -47,7 +50,7 @@ function GameState:doTurn(action)
     local elapsedTime = self.player:doAction(action)
 
     -- Everyone else does a turn:
-    for _, e in ipairs(ents) do
+    for _, ent in ipairs(ents) do
         ent:startTurn(elapsedTime)
         ent:doTurn()
     end

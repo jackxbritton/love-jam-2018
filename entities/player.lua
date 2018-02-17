@@ -13,10 +13,6 @@ function Player:doAction(action)
     -- Reset action points as we can assume our action consumes all avaliable
     self.actionPoints = 0
 
-    if (action.action == "Move") then
-        self:moveDelta(unpack(action.direction))
-    end
-
     return elapsedTime
 end
 

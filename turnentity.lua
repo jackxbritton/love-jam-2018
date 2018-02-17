@@ -18,6 +18,8 @@ end
 function TurnEntity:doAction(action)
     self.actionPoints = self.actionPoints - action.cost
 
+    action:execute(self)
+
     -- Return the elapsedTime of the action
     return action.cost * 100 / self.speed
 end

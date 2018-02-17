@@ -5,6 +5,10 @@ function Action:new(action, cost)
     self.cost = cost
 end
 
+function Action:execute(ent)
+    -- Stub
+end
+
 function Action:__tostring()
     return string.format("%s(cost = %d)", self.action, self.cost)
 end
@@ -14,6 +18,10 @@ local Move = Action:extend()
 function Move:new(dx, dy)
     Move.super.new(self, "Move", 100)
     self.direction = {dx, dy}
+end
+
+function Move:execute(ent)
+    ent:moveDelta(unpack(self.direction))
 end
 
 return {
