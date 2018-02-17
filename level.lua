@@ -3,6 +3,12 @@ local Tile = require("tile")
 
 local Level = Object:extend()
 
+local n = 16
+Level.tiles = {
+    ["empty"] = Tile(love.graphics.newQuad(0, 0, n, n, 64, 64)),
+    ["spike"] = Tile(love.graphics.newQuad(2*n, n, n, n, 64, 64))
+}
+
 function Level:new(w, h)
     self.w = w
     self.h = h
@@ -15,8 +21,7 @@ function Level:new(w, h)
     for x = 0, w-1 do
         self.map[x] = {}
         for y = 0, h-1 do
-            local quad = love.graphics.newQuad(0, 0, 8, 8, 64, 64)
-            self.map[x][y] = Tile(quad)
+            self.map[x][y] = Level.tiles["empty"]
         end
     end
 
