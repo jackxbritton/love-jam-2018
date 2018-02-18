@@ -21,7 +21,11 @@ function Enemy:doTurn()
             if not self:canDoAction(action) then break end
 
             -- Do the action
-            self:doAction(action)
+            local elapsedTime = self:doAction(action)
+
+            if elapsedTime <= 0 then -- Prevent infinite loop
+                return
+            end
         else
             break
         end

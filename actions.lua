@@ -23,7 +23,7 @@ end
 
 function Attack:execute(ent)
     -- Stub for now
-    print("Attack!!!", ent, self.target)
+    ent:attack(self.target)
     return true
 end
 

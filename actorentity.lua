@@ -6,6 +6,7 @@ function ActorEntity:new(...)
     self.maxHealth = 100
     self.health = self.maxHealth
     self.armor = 0.0
+    self.weapon = nil
 end
 
 function ActorEntity:takeDamage(damage)
@@ -22,7 +23,26 @@ function ActorEntity:heal(amount)
     self.health = math.min(self.maxHealth, self.health + amount)
 end
 
-function ActorEntity:canAttack()
+function ActorEntity:canAttack(target)
+    -- This will help enemies not attack other enemies, and the like
+    if self.weapon == nil then
+        return false
+    end
+
+    return true
+end
+
+function ActorEntity:attack(target)
+    print("1")
+    if not self:canAttack(target) then
+        return false
+    end
+
+    print("2")
+    local damage = weapon.damage
+    target.takeDamage(damage)
+
+    print("3")
     return true
 end
 
