@@ -28,4 +28,8 @@ function Enemy:doTurn()
     end
 end
 
+function Enemy:__tostring()
+    return string.format("Enemy(%d, %d)", self.x, self.y)
+end
+
 return Enemy

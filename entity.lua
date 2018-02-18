@@ -17,4 +17,8 @@ end
 function Entity:onRemove()
 end
 
+function Entity:__tostring()
+    return string.format("Entity(%d, %d, %d, %d)", self.x, self.y, self.width, self.height)
+end
+
 return Entity

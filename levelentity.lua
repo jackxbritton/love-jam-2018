@@ -7,7 +7,7 @@ function LevelEntity:new(level)
 end
 
 function LevelEntity:moveDelta(dx, dy)
-    self:moveTo(self.x + dx, self.y + dy)
+    return self:moveTo(self.x + dx, self.y + dy)
 end
 
 function LevelEntity:moveTo(x, y)
@@ -18,7 +18,10 @@ function LevelEntity:moveTo(x, y)
         self.y = y
 
         self.entityTracker:update(self, self.x, self.y, self.width, self.height)
+        return true
     end
+
+    return false
 end
 
 function LevelEntity:canMoveTo(x, y)
@@ -71,6 +74,10 @@ function LevelEntity:getScreenRect()
         self.width * self.level.tileWidth,
         self.height * self.level.tileHeight
     )
+end
+
+function LevelEntity:__tostring()
+    return string.format("LevelEntity(%d, %d)", self.x, self.y)
 end
 
 return LevelEntity

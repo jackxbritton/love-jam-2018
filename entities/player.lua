@@ -16,4 +16,8 @@ function Player:doAction(action)
     return elapsedTime
 end
 
+function Player:__tostring()
+    return string.format("Player(%d, %d)", self.x, self.y)
+end
+
 return Player

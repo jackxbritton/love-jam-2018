@@ -1,3 +1,5 @@
+local Actions = require("actions")
+
 local TurnEntity = require("levelentity"):extend()
 
 function TurnEntity:new(...)
@@ -16,12 +18,21 @@ function TurnEntity:canDoAction(action)
 end
 
 function TurnEntity:doAction(action)
-    self.actionPoints = self.actionPoints - action.cost
+    while true do
+        local result = action:execute(self)
+        if result == true then
+            self.actionPoints = self.actionPoints - action.cost
 
-    action:execute(self)
-
-    -- Return the elapsedTime of the action
-    return action.cost * 100 / self.speed
+            -- Return the elapsedTime of the action
+            return action.cost * 100 / self.speed
+        elseif result == false or result == nil then
+            return 0
+        elseif result:is(Actions.Action) then
+            action = result
+        else
+            error("Unknown action:execute return type: " .. tostring(result))
+        end
+    end
 end
 
 function TurnEntity:doTurn()

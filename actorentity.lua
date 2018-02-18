@@ -22,6 +22,10 @@ function ActorEntity:heal(amount)
     self.health = math.min(self.maxHealth, self.health + amount)
 end
 
+function ActorEntity:canAttack()
+    return true
+end
+
 function ActorEntity:onDeath()
 end
 
