@@ -15,6 +15,8 @@ function Level:new()
     self.tileHeight = n
 
     self.image = Media:getImage("programmer-art.png")
+    self.seenTiles = {}
+    self.visibleTiles = {}
 end
 
 function Level:getTile(x, y)
@@ -126,13 +128,35 @@ function Level:getRandomRoom()
     return lume.randomchoice(self.rooms)
 end
 
-function Level:draw()
-    love.graphics.setColor(255,255,255)
+function Level:checkFOV(x, y)
+    -- If we have any animated tiles, put animation here
 
+    -- Calculate our PoV
+    self.visibleTiles = {}
+    local fov = ROT.FOV.Precise(function(fov, x, y) return self:isPassable(x, y) end)
+    fov:compute(x,y, 10, function(x, y, r, visiblity)
+        local key = string.format("%d,%d",x+1,y+1)
+        self.seenTiles[key] = true
+        self.visibleTiles[key] = r/10
+    end)
+
+end
+
+function Level:draw()
     for x = 0, self.mapWidth-1 do
         for y = 0, self.mapHeight-1 do
-            local sx, sy = x * self.tileWidth, y * self.tileHeight
-            love.graphics.draw(self.image, self.map[x+1][y+1].quad, sx, sy)
+            local key = string.format("%d,%d",x+1,y+1)
+            if self.seenTiles[key] then
+                love.graphics.setColor(100,100,100)
+
+                if self.visibleTiles[key] ~= nil then
+                    local l = math.pow(1 - self.visibleTiles[key], 2) * 100 + 155
+                    love.graphics.setColor(l,l,l)
+                end
+
+                local sx, sy = x * self.tileWidth, y * self.tileHeight
+                love.graphics.draw(self.image, self.map[x+1][y+1].quad, sx, sy)
+            end
         end
     end
 end

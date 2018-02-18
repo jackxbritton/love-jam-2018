@@ -28,6 +28,9 @@ function GameState:new()
 
     self:addEntity(self.player)
     self:addEntity(enemy)
+
+
+    self.level:checkFOV(self.player.x, self.player.y)
 end
 
 function GameState:addEntity(ent)
@@ -78,6 +81,8 @@ function GameState:doTurn(action)
         ent:startTurn(elapsedTime)
         ent:doTurn()
     end
+
+    self.level:checkFOV(self.player.x, self.player.y)
 end
 
 return GameState
