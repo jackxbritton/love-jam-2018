@@ -232,6 +232,7 @@ function Room:create(digCallback)
             else
                 value=0
             end
+
             digCallback(x, y, value)
         end
     end

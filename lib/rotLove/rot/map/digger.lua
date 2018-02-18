@@ -105,6 +105,10 @@ function Digger:create(callback)
 end
 
 function Digger:_digCallback(x, y, value)
+    if x <= 0 or y <= 0 or x > self._width or y > self._height then
+        return
+    end
+
     if value==0 or value==2 then
         self._map[x][y]=0
         self._dug=self._dug+1

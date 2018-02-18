@@ -9,6 +9,9 @@ Gamestate = require("lib.hump.gamestate")
 
 Entity = require("entity")
 
+-- Install cheats
+require("lib.autobatch")
+
 -- Watch out for globals
 require("lib.globalwatch")
 

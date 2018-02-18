@@ -11,6 +11,7 @@ function LevelEntity:moveDelta(dx, dy)
 end
 
 function LevelEntity:moveTo(x, y)
+    local x, y = math.floor(x), math.floor(y)
     if self.level:isPassable(x, y) then
         self.x = x
         self.y = y

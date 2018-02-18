@@ -12,14 +12,22 @@ local Actions = require("actions")
 
 function GameState:new()
     self.level = Level()
-    self.level:loadFromFile("assets/maps/level.txt")
-    
+    self.level:generate(50,50)
+    -- self.level:loadFromFile("assets/maps/level.txt")
+
     self.entities = Group()
     self.player = Player(self.level)
-    self.camera = Camera(0,0, 2)
+    self.camera = Camera(0,0, 1)
+
+    local room = self.level:getRandomRoom()
+    self.player:moveTo(room:middle())
+
+    local enemy = Enemy(self.level)
+    local room = self.level:getRandomRoom()
+    enemy:moveTo(room:middle())
 
     self:addEntity(self.player)
-    self:addEntity(Enemy(self.level))
+    self:addEntity(enemy)
 end
 
 function GameState:addEntity(ent)

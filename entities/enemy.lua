@@ -5,6 +5,7 @@ function Enemy:new(level)
     Enemy.super.new(self, level)
 
     self.x, self.y = 3, 2
+    self.speed = 70
 end
 
 function Enemy:doTurn()
