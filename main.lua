@@ -23,4 +23,7 @@ function love.load()
     -- Magic the love.* events to call our gamestates
     Gamestate.registerEvents()
     Gamestate.switch(GameState())
+
+    -- Prevent tendinitis
+    love.keyboard.setKeyRepeat(true)
 end

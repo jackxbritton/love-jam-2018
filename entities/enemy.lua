@@ -1,11 +1,14 @@
 local Enemy = require("actorentity"):extend()
 local Actions = require("actions")
+local Weapon = require("weapon")
 
 function Enemy:new(level)
     Enemy.super.new(self, level)
 
-    self.x, self.y = 3, 2
     self.speed = 70
+
+    self.weapon = Weapon()
+    self.weapon.damage = 30
 end
 
 function Enemy:doTurn()

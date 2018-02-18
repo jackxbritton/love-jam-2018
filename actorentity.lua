@@ -33,16 +33,13 @@ function ActorEntity:canAttack(target)
 end
 
 function ActorEntity:attack(target)
-    print("1")
     if not self:canAttack(target) then
         return false
     end
 
-    print("2")
-    local damage = weapon.damage
-    target.takeDamage(damage)
+    local damage = self.weapon.damage
+    target:takeDamage(damage)
 
-    print("3")
     return true
 end
 

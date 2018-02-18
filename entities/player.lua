@@ -1,10 +1,12 @@
 local Player = require("actorentity"):extend()
+local Weapon = require("weapon")
 
 
 function Player:new(level)
     Player.super.new(self, level)
 
-    self.x, self.y = 3, 8
+    self.weapon = Weapon()
+    self.weapon.damage = 40
 end
 
 function Player:doAction(action)
