@@ -12,10 +12,45 @@ end
 
 function LevelEntity:moveTo(x, y)
     local x, y = math.floor(x), math.floor(y)
-    if self.level:isPassable(x, y) then
+
+    if self:canMoveTo(x, y) then
         self.x = x
         self.y = y
+
+        self.entityTracker:update(self, self.x, self.y, self.width, self.height)
     end
+end
+
+function LevelEntity:canMoveTo(x, y)
+    local x, y = math.floor(x), math.floor(y)
+
+    if self.level:isPassable(x, y) then
+        local otherEnts = self:getEntitiesAt(x, y)
+        if #otherEnts == 0 then
+            return true
+        else
+            return false
+        end
+    else
+        return false
+    end
+end
+
+function LevelEntity:getEntitiesAt(x,y)
+    local ents = {}
+    self.entityTracker:each(x, y, 1, 1, function(ent)
+        table.insert(ents, ent)
+    end)
+
+    return ents
+end
+
+function LevelEntity:onAdd()
+    self.entityTracker:add(self, self.x, self.y, self.width, self.height)
+end
+
+function LevelEntity:onRemove()
+    self.entityTracker:remove(self)
 end
 
 function LevelEntity:draw()

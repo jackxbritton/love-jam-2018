@@ -6,11 +6,15 @@ function Entity:new(x, y, w, h)
 end
 
 function Entity:update(dt)
-
 end
 
 function Entity:draw()
+end
 
+function Entity:onAdd()
+end
+
+function Entity:onRemove()
 end
 
 return Entity

@@ -10,7 +10,7 @@ end
 
 function Enemy:doTurn()
     while self.actionPoints >= 0 do
-        local player = self.gamestate.player
+        local player = self.gameState.player
         local path = self.level:getPath(self.x, self.y, player.x, player.y)
         local next = path[2]
         if next then

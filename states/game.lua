@@ -1,6 +1,7 @@
 local GameState = Object:extend()
 
 local Camera = require("lib.hump.camera")
+local shash  = require("lib.shash")
 
 local Player  = require("entities.player")
 local Enemy   = require("entities.enemy")
@@ -15,26 +16,28 @@ function GameState:new()
     self.level:generate(50,50)
     -- self.level:loadFromFile("assets/maps/level.txt")
 
+    self.entityTracker = shash.new(1)
     self.entities = Group()
     self.player = Player(self.level)
     self.camera = Camera(0,0, 1)
 
-    local room = self.level:getRandomRoom()
-    self.player:moveTo(room:middle())
-
     local enemy = Enemy(self.level)
-    local room = self.level:getRandomRoom()
-    enemy:moveTo(room:middle())
-
+    
     self:addEntity(self.player)
     self:addEntity(enemy)
 
+    local room = self.level:getRandomRoom()
+    self.player:moveTo(room:middle())
+
+    local room = self.level:getRandomRoom()
+    enemy:moveTo(room:middle())
 
     self.level:checkFOV(self.player.x, self.player.y)
 end
 
 function GameState:addEntity(ent)
-    ent.gamestate = self
+    ent.gameState = self
+    ent.entityTracker = self.entityTracker
     self.entities:add(ent)
 end
 

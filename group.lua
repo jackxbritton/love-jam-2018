@@ -16,10 +16,13 @@ function Group:add(e, idx)
     end
 
     e.parent = self
+
+    e:onAdd()
 end
 
 
 function Group:remove(e)
+    e:onRemove()
     table.remove(self.members, lume.find(self.members, e))
 end
 
