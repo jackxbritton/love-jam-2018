@@ -1,0 +1,7 @@
+{
+	"buildpath": "build",
+	"processors": ["luac"],
+	"loveversion": "0.10.2",
+	"gamename": "LoveJam2018",
+	"identifier": "com.wetdesertrock.lovejam2018"
+}
