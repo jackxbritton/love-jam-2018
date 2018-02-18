@@ -1,4 +1,4 @@
-local Enemy = require("turnentity"):extend()
+local Enemy = require("actorentity"):extend()
 local Actions = require("actions")
 
 function Enemy:new(level)

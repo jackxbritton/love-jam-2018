@@ -1,4 +1,4 @@
-local Player = require("turnentity"):extend()
+local Player = require("actorentity"):extend()
 
 
 function Player:new(level)
