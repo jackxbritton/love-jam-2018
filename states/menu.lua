@@ -43,7 +43,7 @@ function MenuState:draw()
     local w,h = love.graphics.getDimensions()
     love.graphics.setFont(bigFont)
     love.graphics.setColor(255, 255, 255)
-    love.graphics.printf("GAME", w/2, h/2, 0, "center")
+    love.graphics.printf("GAME", 0, h/2, w, "center")
     love.graphics.setFont(smallFont)
     for i = 1, #items do
         local item = items[i]
@@ -52,26 +52,8 @@ function MenuState:draw()
         else
             love.graphics.setColor(255, 255, 255)
         end
-        love.graphics.printf(item.text, w/2, 40 + 20*i+h/2, 0, "center")
+        love.graphics.printf(item.text, 0, 40 + 20*i+h/2, w, "center")
     end
-end
-
-function MenuState:doTurn(action)
-    -- Get a list of turn taking entities (excluding our player)
-    local ents = self.entities:filter(function(e)
-        return e:is(TurnEntity) and e ~= self.player
-    end)
-
-    -- Player does a turn:
-    local elapsedTime = self.player:doAction(action)
-
-    -- Everyone else does a turn:
-    for _, ent in ipairs(ents) do
-        ent:startTurn(elapsedTime)
-        ent:doTurn()
-    end
-
-    self.level:checkFOV(self.player.x, self.player.y)
 end
 
 return MenuState

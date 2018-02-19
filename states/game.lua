@@ -95,6 +95,7 @@ function GameState:draw()
     self.level:draw()
     self.entities:draw()
     self.camera:detach()
+    
     self:drawHealth()
 end
 
