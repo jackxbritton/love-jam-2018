@@ -9,6 +9,8 @@ local TurnEntity   = require("turnentity")
 local Level   = require("level")
 local Group   = require("group")
 local Actions = require("actions")
+local Weapon  = require("weapon")
+local Enemies = require("data.enemies")
 
 
 function GameState:new()
@@ -21,16 +23,14 @@ function GameState:new()
     self.player = Player(self.level)
     self.camera = Camera(0,0, 1)
 
-    local enemy = Enemy(self.level)
-    
     self:addEntity(self.player)
-    self:addEntity(enemy)
 
     local room = self.level:getRandomRoom()
     self.player:moveTo(room:middle())
 
-    local room = self.level:getRandomRoom()
-    enemy:moveTo(room:middle())
+    for i=1, 10 do
+        self:createEnemy("bacteria")
+    end
 
     self.level:checkFOV(self.player.x, self.player.y)
 end
@@ -39,6 +39,32 @@ function GameState:addEntity(ent)
     ent.gameState = self
     ent.entityTracker = self.entityTracker
     self.entities:add(ent)
+end
+
+function GameState:createEnemy(enemyname, x, y)
+    if x == nil then
+        -- Get position if not provided
+        local room = self.level:getRandomRoom()
+        x = room.x + love.math.random(0, room.width)
+        y = room.y + love.math.random(0, room.height)
+
+        -- TODO: Verify that no entity exists here already, if so retry
+    end
+
+    local template = Enemies[enemyname]
+
+    local enemy = Enemy(self.level)
+    self:addEntity(enemy)
+
+    local weapon = Weapon()
+    weapon.name = template.weapon.name
+    weapon.damage = template.weapon.damage
+
+    enemy.speed = template.speed
+    enemy.armor = template.armor
+    enemy.weapon = weapon
+
+    enemy:moveTo(x, y)
 end
 
 function GameState:keypressed(key, scancode, isrepeat)
