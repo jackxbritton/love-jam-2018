@@ -14,6 +14,9 @@ local items = {
 
 local selected = 1
 
+local bigFont   = love.graphics.newFont(32)
+local smallFont = love.graphics.newFont(12)
+
 function MenuState:new()
 end
 
@@ -38,6 +41,10 @@ end
 
 function MenuState:draw()
     local w,h = love.graphics.getDimensions()
+    love.graphics.setFont(bigFont)
+    love.graphics.setColor(255, 255, 255)
+    love.graphics.printf("GAME", w/2, h/2, 0, "center")
+    love.graphics.setFont(smallFont)
     for i = 1, #items do
         local item = items[i]
         if i == selected then
@@ -45,7 +52,7 @@ function MenuState:draw()
         else
             love.graphics.setColor(255, 255, 255)
         end
-        love.graphics.printf(item.text, w/2, 40*(i-1)+h/2, 0, "center")
+        love.graphics.printf(item.text, w/2, 40 + 20*i+h/2, 0, "center")
     end
 end
 
