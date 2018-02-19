@@ -3,31 +3,33 @@ local MenuState = Object:extend()
 Gamestate = require("lib.hump.gamestate")
 local GameState = require("states.game")
 
+local items = {
+    { text = "Play", func = function()
+        Gamestate.switch(GameState())
+    end },
+    { text = "Quit", func = function()
+        love.event.quit()
+    end }
+}
+
+local selected = 1
+
 function MenuState:new()
-    self.items = {
-        { text = "Play", func = function()
-            Gamestate.switch(GameState())
-        end },
-        { text = "Quit", func = function()
-            love.event.quit()
-        end }
-    }
-    self.selected = 1
 end
 
 function MenuState:keypressed(key, scancode, isrepeat)
     if key == "up" then
-        self.selected = self.selected - 1
-        if self.selected == 0 then
-            self.selected = 1
+        selected = selected - 1
+        if selected == 0 then
+            selected = 1
         end
     elseif key == "down" then
-        self.selected = self.selected + 1
-        if self.selected == #self.items+1 then
-            self.selected = #self.items
+        selected = selected + 1
+        if selected == #items+1 then
+            selected = #items
         end
     elseif key == "return" then
-        self.items[self.selected].func()
+        items[selected].func()
     end
 end
 
@@ -36,9 +38,9 @@ end
 
 function MenuState:draw()
     local w,h = love.graphics.getDimensions()
-    for i = 1, #self.items do
-        local item = self.items[i]
-        if i == self.selected then
+    for i = 1, #items do
+        local item = items[i]
+        if i == selected then
             love.graphics.setColor(255, 0, 0)
         else
             love.graphics.setColor(255, 255, 255)

@@ -1,6 +1,8 @@
 local Player = require("actorentity"):extend()
 local Weapon = require("weapon")
 
+Gamestate = require("lib.hump.gamestate")
+
 function Player:new(level)
     Player.super.new(self, level)
 
@@ -18,7 +20,7 @@ function Player:doAction(action)
 end
 
 function Player:onDeath()
-    self.gameState.switch(GameState())
+    Gamestate.switch(require("states.menu"))
 end
 
 function Player:__tostring()

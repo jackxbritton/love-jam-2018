@@ -12,7 +12,6 @@ local Actions = require("actions")
 local Weapon  = require("weapon")
 local Enemies = require("data.enemies")
 
-
 function GameState:new()
     self.level = Level()
     self.level:generate(50,50)
@@ -79,6 +78,8 @@ function GameState:keypressed(key, scancode, isrepeat)
 
     if actions[key] ~= nil then
         self:doTurn(actions[key])
+    elseif key == "escape" then
+        Gamestate.switch(require("states.menu"))
     end
 end
 
