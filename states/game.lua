@@ -100,10 +100,10 @@ end
 
 function GameState:drawHealth()
     -- Draw the health bar.
-    w,h = love.graphics.getDimensions()
+    local w,h = love.graphics.getDimensions()
     --love.graphics.printf(self.player.health, w, 0, 0, "right")
-    margin = 20
-    width,height = 100,320
+    local margin = 20
+    local width,height = 100,320
     love.graphics.setColor(255, 255, 255)
     love.graphics.rectangle("fill", w-margin-width, margin, width, height)
     love.graphics.setColor(255, 0, 0)
