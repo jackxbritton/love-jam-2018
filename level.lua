@@ -142,6 +142,18 @@ function Level:checkFOV(x, y)
 
 end
 
+function Level:isSeen(x, y)
+    x, y = math.floor(x), math.floor(y)
+    local key = string.format("%d,%d",x+1,y+1)
+    return self.seenTiles[key]
+end
+
+function Level:isVisible(x, y)
+    x, y = math.floor(x), math.floor(y)
+    local key = string.format("%d,%d",x+1,y+1)
+    return self.visibleTiles[key] ~= nil
+end
+
 function Level:draw()
     for x = 0, self.mapWidth-1 do
         for y = 0, self.mapHeight-1 do

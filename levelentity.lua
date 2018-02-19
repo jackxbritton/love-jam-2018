@@ -57,11 +57,13 @@ function LevelEntity:onRemove()
 end
 
 function LevelEntity:draw()
-    local rect = self:getScreenRect()
+    if self.level:isVisible(self.x, self.y) then
+        local rect = self:getScreenRect()
 
-    -- Hot pink is the best for temp graphics
-    love.graphics.setColor(200,200,200)
-    love.graphics.rectangle("fill", rect.x, rect.y, rect.width, rect.height)
+        -- Hot pink is the best for temp graphics
+        love.graphics.setColor(200,200,200)
+        love.graphics.rectangle("fill", rect.x, rect.y, rect.width, rect.height)
+    end
 end
 
 -- Couldn't figure out a better name. Get the rect representing the pixels that
