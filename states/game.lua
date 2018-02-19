@@ -95,6 +95,19 @@ function GameState:draw()
     self.level:draw()
     self.entities:draw()
     self.camera:detach()
+    self:drawHealth()
+end
+
+function GameState:drawHealth()
+    -- Draw the health bar.
+    w,h = love.graphics.getDimensions()
+    --love.graphics.printf(self.player.health, w, 0, 0, "right")
+    margin = 20
+    width,height = 100,320
+    love.graphics.setColor(255, 255, 255)
+    love.graphics.rectangle("fill", w-margin-width, margin, width, height)
+    love.graphics.setColor(255, 0, 0)
+    love.graphics.rectangle("fill", w-margin-width, margin+height-height*self.player.health/self.player.maxHealth, width, height*self.player.health/self.player.maxHealth)
 end
 
 function GameState:doTurn(action)
