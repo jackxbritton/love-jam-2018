@@ -17,13 +17,13 @@ require("lib.globalwatch")
 
 -- Game stuff.
 
-local GameState = require("states.game")
+local MenuState = require("states.menu")
 
 function love.load()
     -- Magic the love.* events to call our gamestates
     Gamestate.registerEvents()
-    Gamestate.switch(GameState())
+    Gamestate.switch(MenuState())
 
-    -- Prevent tendinitis
+    -- Prevent tendonitis
     love.keyboard.setKeyRepeat(true)
 end

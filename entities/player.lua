@@ -1,7 +1,6 @@
 local Player = require("actorentity"):extend()
 local Weapon = require("weapon")
 
-
 function Player:new(level)
     Player.super.new(self, level)
 
@@ -16,6 +15,10 @@ function Player:doAction(action)
     self.actionPoints = 0
 
     return elapsedTime
+end
+
+function Player:onDeath()
+    self.gameState.switch(GameState())
 end
 
 function Player:__tostring()
